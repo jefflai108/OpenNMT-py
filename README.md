@@ -1,3 +1,9 @@
+Set up your Virtual Env:
+* virtualenv -p python3 venv3
+* source venv3/bin/activate
+* pip install -r requirements.txt
+
+Clone of:
 # OpenNMT-py: Open-Source Neural Machine Translation
 
 [![Build Status](https://travis-ci.org/OpenNMT/OpenNMT-py.svg?branch=master)](https://travis-ci.org/OpenNMT/OpenNMT-py)
