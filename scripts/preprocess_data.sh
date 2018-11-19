@@ -5,19 +5,19 @@ SRC=es
 TRG=en
 
 # Full corpus training (Europarl + OpenSubtitles)
-python preprocess.py \
-	-train_src $datadir/corpus.bpe.100.$SRC \
-	-train_tgt $datadir/corpus.bpe.100.$TRG \
-	-valid_src $datadir/dev/newstest2012_OS2018.dev.bpe.100.$SRC \
-	-valid_tgt $datadir/dev/newstest2012_OS2018.dev.bpe.100.$TRG \
-	-save_data $datadir/corpus.100
-
-python preprocess.py \
-	-train_src $datadir/corpus.bpe.60.$SRC \
-	-train_tgt $datadir/corpus.bpe.60.$TRG \
-	-valid_src $datadir/dev/newstest2012_OS2018.dev.bpe.60.$SRC \
-	-valid_tgt $datadir/dev/newstest2012_OS2018.dev.bpe.60.$TRG \
-	-save_data $datadir/corpus.60
+##python preprocess.py \
+##	-train_src $datadir/corpus.bpe.100.$SRC \
+##	-train_tgt $datadir/corpus.bpe.100.$TRG \
+##	-valid_src $datadir/dev/newstest2012_OS2018.dev.bpe.100.$SRC \
+##	-valid_tgt $datadir/dev/newstest2012_OS2018.dev.bpe.100.$TRG \
+##	-save_data $datadir/corpus.100
+##
+##python preprocess.py \
+##	-train_src $datadir/corpus.bpe.60.$SRC \
+##	-train_tgt $datadir/corpus.bpe.60.$TRG \
+##	-valid_src $datadir/dev/newstest2012_OS2018.dev.bpe.60.$SRC \
+##	-valid_tgt $datadir/dev/newstest2012_OS2018.dev.bpe.60.$TRG \
+##	-save_data $datadir/corpus.60
 
 python preprocess.py \
 	-train_src $datadir/corpus.bpe.30.$SRC \
