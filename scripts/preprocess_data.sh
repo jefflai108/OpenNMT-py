@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/usr/bin/env python
 
+export datadir=/export/c06/kmarc/mt-final/data
 SRC=es
 TRG=en
-datadir=/export/c06/kmarc/mt-final/data
 
 # Full corpus training (Europarl + OpenSubtitles)
 python preprocess.py \

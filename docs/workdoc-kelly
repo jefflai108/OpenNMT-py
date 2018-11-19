@@ -1,2 +1,5 @@
 18 Nov
 forked this repo
+wrote and ran scripts/preprocess_data.sh
+Ran quickstart code with:
+	- python train.py -data data/demo -save_model demo-model -world_size 1 -gpu_ranks `free-gpu`
