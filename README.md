@@ -4,6 +4,10 @@ Set up your Virtual Env:
 * source venv3/bin/activate
 * pip install -r requirements.txt
 
+Jeff's path: /export/b14/jlai/mt/data
+Kelly's path: /export/c06/kmarc/OpenNMT-py-fork
+
+
 Clone of:
 # OpenNMT-py: Open-Source Neural Machine Translation
 
