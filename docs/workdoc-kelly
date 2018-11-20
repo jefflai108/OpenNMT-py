@@ -7,4 +7,9 @@ Ran quickstart code with:
 19 Nov
 added checkpoint/ model/ out/ and qsub/ directories, with .gitignore in each
 	- Thanks to https://stackoverflow.com/questions/115983/how-can-i-add-an-empty-directory-to-a-git-repository/932982#932982
-	for the .gitignore trick. 
+	for the .gitignore trick.
+copied/amended local-settings.sh and qsub_train.sh and their uses from Huda's 
+	/home/huda/experiment/wmt18-filtering-de-en/nmt/gacha_10
+copied/amended validate.{en/de}.sh from marian wmt2017-transformer example and 
+	put in scripts
+created train.sh and ran baseline experiments 0-2
