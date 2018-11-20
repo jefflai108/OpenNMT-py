@@ -3,3 +3,8 @@ forked this repo
 wrote and ran scripts/preprocess_data.sh
 Ran quickstart code with:
 	- python train.py -data data/demo -save_model demo-model -world_size 1 -gpu_ranks `free-gpu`
+
+19 Nov
+added checkpoint/ model/ out/ and qsub/ directories, with .gitignore in each
+	- Thanks to https://stackoverflow.com/questions/115983/how-can-i-add-an-empty-directory-to-a-git-repository/932982#932982
+	for the .gitignore trick. 
