@@ -1,4 +1,5 @@
 Translating into Simple/Complex Reading Level
+
 This is Kelly, Jeff, and Craig's second attempt at our Machine Translation 
 Final Project (Fall 2018) based off a fork of OpenNMT.
 
@@ -16,6 +17,7 @@ Workflow
 
 
 Jeff's Grid path: /export/b14/jlai/mt
+
 Kelly's Grid path: /export/c06/kmarc/mtfinal-omnt
 
 
