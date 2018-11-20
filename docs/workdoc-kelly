@@ -13,3 +13,4 @@ copied/amended local-settings.sh and qsub_train.sh and their uses from Huda's
 copied/amended validate.{en/de}.sh from marian wmt2017-transformer example and 
 	put in scripts
 created train.sh and ran baseline experiments 0-2
+added qsub-trans.sh and translate.sh

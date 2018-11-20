@@ -11,6 +11,7 @@ To start, set up your Virtual Env:
 Workflow
 * Train: sh qsub-train.sh {exp#}
 * Translate test set: sh qsub-translate.sh
+** sh qsub-trans.sh model testset\_opt output\_file
 * Score Readability:
 
 
