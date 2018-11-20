@@ -16,7 +16,7 @@ Workflow
 
 
 Jeff's Grid path: /export/b14/jlai/mt
-Kelly's Grid path: /export/c06/kmarc/OpenNMT-py-fork
+Kelly's Grid path: /export/c06/kmarc/mtfinal-omnt
 
 
 Fork of:
