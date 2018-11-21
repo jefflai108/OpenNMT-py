@@ -14,3 +14,9 @@ copied/amended validate.{en/de}.sh from marian wmt2017-transformer example and
 	put in scripts
 created train.sh and ran baseline experiments 0-2
 added qsub-trans.sh and translate.sh
+
+21 Nov
+copied over issues-kelly, things-to-consider-kelly, and workdoc-kelly from 
+	~/complexity-transl/docs to docs/. Renamed workdoc-kelly from that
+	directory to workdoc-kelly-from-complexity-transl
+copied get_readability.py from ~/complexity_transl to here. 

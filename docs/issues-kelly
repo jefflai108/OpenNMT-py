@@ -1,0 +1,14 @@
+Issues to Resolve:
+Readability scorers are affected by tokenization. OPUS/Europarl data comes 
+	pre-tokenized (splitting "Kelly' s", for instance). This affects 
+	scoring. We need to think about how to deal with this (and if it 
+	matters - especially b/c OPUS has many more apostrophes than Europarl,
+	and splitting tends to make readability scores lower. 
+There may be a bug in textstat.text_standard. Its scores are sometimes 
+	severely inconsistent w/ Flesch/Dale.
+We need a dev/test set for OpenSubtitles
+Readability scorers break with unexpected unicode characters. Decide how to
+	deal with this. (delete unicode, change to |, etc)
+
+11-Nov: Currently downloading OpenSubtitles2018 -- must do data preprocessing 
+	again with this when it's downloaded
