@@ -19,4 +19,10 @@ added qsub-trans.sh and translate.sh
 copied over issues-kelly, things-to-consider-kelly, and workdoc-kelly from 
 	~/complexity-transl/docs to docs/. Renamed workdoc-kelly from that
 	directory to workdoc-kelly-from-complexity-transl
-copied get_readability.py from ~/complexity_transl to here. 
+copied get_readability.py from ~/complexity_transl to here.
+updated translate.sh to call readability scorers
+updated get_readability.py to handle summary score for entire file.
+installed (outside VM? it seems to work OK) textstat with:
+	pip install textstat
+finished writing get_readability.py
+wrote finished writing translate.sh and ran scoring tests 0-8

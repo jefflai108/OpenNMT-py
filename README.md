@@ -3,11 +3,12 @@ Translating into Simple/Complex Reading Level
 This is Kelly, Jeff, and Craig's second attempt at our Machine Translation 
 Final Project (Fall 2018) based off a fork of OpenNMT.
 
-To start, set up your Virtual Env:
-* After you git clone this directory, cd into it and then:
-* virtualenv -p python3 venv3
-* source venv3/bin/activate
-* pip install -r requirements.txt
+##To start, set up your Virtual Env:
+##* After you git clone this directory, cd into it and then:
+##* virtualenv -p python3 venv3
+##* source venv3/bin/activate
+##* pip install -r requirements.txt
+##* pip install textstat
 
 Workflow
 * Train: sh qsub-train.sh {exp#}
