@@ -1,14 +1,28 @@
-Set up your Virtual Env:
-* After you git clone this directory, cd into it and then:
-* virtualenv -p python3 venv3
-* source venv3/bin/activate
-* pip install -r requirements.txt
+Translating into Simple/Complex Reading Level
 
-Jeff's path: /export/b14/jlai/mt/data
-Kelly's path: /export/c06/kmarc/OpenNMT-py-fork
+This is Kelly, Jeff, and Craig's second attempt at our Machine Translation 
+Final Project (Fall 2018) based off a fork of OpenNMT.
+
+##To start, set up your Virtual Env:
+##* After you git clone this directory, cd into it and then:
+##* virtualenv -p python3 venv3
+##* source venv3/bin/activate
+##* pip install -r requirements.txt
+##* pip install textstat
+
+Workflow
+* Train: sh qsub-train.sh {exp#}
+* Translate test set: sh qsub-translate.sh
+** sh qsub-trans.sh model testset\_opt output\_file
+* Score Readability:
 
 
-Clone of:
+Jeff's Grid path: /export/b14/jlai/mt
+
+Kelly's Grid path: /export/c06/kmarc/mtfinal-omnt
+
+
+Fork of:
 # OpenNMT-py: Open-Source Neural Machine Translation
 
 [![Build Status](https://travis-ci.org/OpenNMT/OpenNMT-py.svg?branch=master)](https://travis-ci.org/OpenNMT/OpenNMT-py)

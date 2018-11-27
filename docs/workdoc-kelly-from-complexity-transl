@@ -1,0 +1,62 @@
+10 Nov
+downloaded datasets:
+	- wget --limit-rate=20k http://opus.nlpl.eu/download.php?f=OpenSubtitles/en-es.txt.zip
+	- wget --limit-rate=20k http://www.statmt.org/europarl/v7/es-en.tgz
+copied kellyedit-starter-code4.py from HW4 code (batching w/ shuffle training
+    data every epoch) and renamed it translate.py (changed to -code7.py later 
+    by adding early stopping code)
+create virtualenv & install textstat
+    - Run: 
+        - virtualenv venv
+        - source venv/bin/activate
+        - pip install textstat
+	- pip install torch torchvision
+	- pip install matplotlib
+	- pip install nltk
+added get_readability.py to readability score output translations
+
+11 Nov
+created combined corpora ##NOTE - deleted 12 Nov for new Opus##:
+	- cat europarl-v7.es-en.en OpenSubtitles.en-es.en > corpus.en
+	- cat europarl-v7.es-en.es OpenSubtitles.en-es.es > corpus.es
+preprocessed data with preprocess-data.sh## 
+download Europarl dev/test sets:
+	- wget --limit-rate=20k http://statmt.org/wmt13/dev.tgz
+	- wget --limit-rate=20k http://statmt.org/wmt13/test.tgz
+wrote and ran extract-sgm.sh to convert test data to raw text form
+downloaded larger OpenSubtitles2018 dataset
+	- wget --limit-rate=20k http://opus.nlpl.eu/download.php?f=OpenSubtitles2018/en-es.txt.zip
+
+12 Nov
+wrote and ran split-opus.sh to split OpenSubtitles2018 data into train/dev/test
+created combined training corpora
+	- cat europarl-v7.es-en.en OpenSubtitles2018.en-es.en.shuf.train > corpus.en
+	- cat europarl-v7.es-en.es OpenSubtitles2018.en-es.es.shuf.train > corpus.es 
+updated preprocess-data.sh for OPUS2018 and dev/test sets
+ran preprocess-data.sh (does not process full OpenSubtitles2018.en-es.{en,es} 
+	and OpenSubtitles2018.en-es.shuf.{en/es} datasets, and 
+	OpenSubtitles2018.en-es.shuf.extra.{en/es} [too big, unnecessary unless
+	we add additional data later)
+added early stopping to translate.py (from HW5 kellyedit-starter-code7.py)
+
+13 Nov
+removed intermediary data processing files (*.tok.*, *.tc.*, *.uncleaned.*)
+
+14 Nov
+wrote and ran preprocess-data2.sh to:
+	- concatenate dev & test sets
+	- chop train & dev set to 100 BPE tokens
+	- merge src/trg corpus pairs into src-trg files split by |||
+create python3 virtualenv 
+	- virtualenv -p python3 venv3
+	- source venv3/bin/activate
+	- pip3 install textstat torch torchvision matplotlib nltk
+
+17 Nov
+added early stopping to all translate scripts
+started experiments 20-22 in qlogin sessions on machines c06(20) and c09/10 
+	(order unknown)
+moved most checkpoints to /export/c06/kmarc/mt-final/checkpoint/ (will simlink)
+edited experiment 20 to reload state b/c saving on iter 20K died due to stale
+	file handle when moving other checkpoints out of that dir.
+updated preprocess-data2.sh to make size 50 datasets, and ran script. 

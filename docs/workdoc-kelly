@@ -3,3 +3,26 @@ forked this repo
 wrote and ran scripts/preprocess_data.sh
 Ran quickstart code with:
 	- python train.py -data data/demo -save_model demo-model -world_size 1 -gpu_ranks `free-gpu`
+
+19 Nov
+added checkpoint/ model/ out/ and qsub/ directories, with .gitignore in each
+	- Thanks to https://stackoverflow.com/questions/115983/how-can-i-add-an-empty-directory-to-a-git-repository/932982#932982
+	for the .gitignore trick.
+copied/amended local-settings.sh and qsub_train.sh and their uses from Huda's 
+	/home/huda/experiment/wmt18-filtering-de-en/nmt/gacha_10
+copied/amended validate.{en/de}.sh from marian wmt2017-transformer example and 
+	put in scripts
+created train.sh and ran baseline experiments 0-2
+added qsub-trans.sh and translate.sh
+
+21 Nov
+copied over issues-kelly, things-to-consider-kelly, and workdoc-kelly from 
+	~/complexity-transl/docs to docs/. Renamed workdoc-kelly from that
+	directory to workdoc-kelly-from-complexity-transl
+copied get_readability.py from ~/complexity_transl to here.
+updated translate.sh to call readability scorers
+updated get_readability.py to handle summary score for entire file.
+installed (outside VM? it seems to work OK) textstat with:
+	pip install textstat
+finished writing get_readability.py
+wrote finished writing translate.sh and ran scoring tests 0-8
