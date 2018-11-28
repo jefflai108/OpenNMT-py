@@ -8,3 +8,7 @@ Citation for OpenSubtitles2018:
 		- http://opus.nlpl.eu/OpenSubtitles2018.php
 	- should prob actually be:
 		http://www.lrec-conf.org/proceedings/lrec2018/pdf/294.pdf
+
+
+I did the data processing in ~/complexity-transl
+	- look at docs/workdoc-kelly, scripts/preprocess-data.sh, etc.

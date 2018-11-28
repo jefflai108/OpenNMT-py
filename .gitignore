@@ -112,9 +112,6 @@ ENV/
 # Tensorboard
 runs/
 
-# ONMT Stuff
-onmt/
-
 CLSP History
 .history_clsp*
 scripts/.history_clsp.local.scripts

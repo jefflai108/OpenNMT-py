@@ -212,11 +212,13 @@ def build_base_model(model_opt, fields, gpu, checkpoint=None):
 
         tgt_embeddings.word_lut.weight = src_embeddings.word_lut.weight
 
-    decoder = build_decoder(model_opt, tgt_embeddings)
+    decoder0 = build_decoder(model_opt, tgt_embeddings)
+    if model_opts.double_decoder:
+        decoder1 = build_decoder(model_opt, tgt_embeddings)
 
     # Build NMTModel(= encoder + decoder).
     device = torch.device("cuda" if gpu else "cpu")
-    model = onmt.models.NMTModel(encoder, decoder)
+    model = onmt.models.NMTModel(encoder, decoder0, decoder1=None)
 
     # Build Generator.
     if not model_opt.copy_attn:

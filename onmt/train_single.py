@@ -130,9 +130,13 @@ def main(opt, device_id):
     trainer = build_trainer(opt, device_id, model, fields,
                             optim, data_type, model_saver=model_saver)
 
-    def train_iter_fct(): return build_dataset_iter(
-        lazily_load_dataset("train", opt), fields, opt)
+    def train_iter_fct0(): return build_dataset_iter(
+        lazily_load_dataset("train0", opt), fields, opt)
+    def train_iter_fct1(): return build_dataset_iter(
+        lazily_load_dataset("train1", opt), fields, opt)
 
+    def valid_iter_fct(): return build_dataset_iter(
+        lazily_load_dataset("valid", opt), fields, opt, is_train=False)
     def valid_iter_fct(): return build_dataset_iter(
         lazily_load_dataset("valid", opt), fields, opt, is_train=False)
 

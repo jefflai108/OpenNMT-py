@@ -13,12 +13,13 @@ class NMTModel(nn.Module):
       multi<gpu (bool): setup for multigpu support
     """
 
-    def __init__(self, encoder, decoder):
+    def __init__(self, encoder, decoder0, decoder1=None):
         super(NMTModel, self).__init__()
         self.encoder = encoder
-        self.decoder = decoder
+        self.decoder0 = decoder0
+        self.decoder1 = decoder1
 
-    def forward(self, src, tgt, lengths):
+    def forward(self, src, tgt, lengths, dec_num=0):
         """Forward propagate a `src` and `tgt` pair for training.
         Possible initialized with a beginning decoder state.
 
@@ -31,7 +32,7 @@ class NMTModel(nn.Module):
             tgt (:obj:`LongTensor`):
                  a target sequence of size `[tgt_len x batch]`.
             lengths(:obj:`LongTensor`): the src lengths, pre-padding `[batch]`.
-
+            dec_num (int): Which decoder to use.
         Returns:
             (:obj:`FloatTensor`, `dict`, :obj:`onmt.Models.DecoderState`):
 
@@ -42,7 +43,12 @@ class NMTModel(nn.Module):
 
         enc_state, memory_bank, lengths = self.encoder(src, lengths)
         self.decoder.init_state(src, memory_bank, enc_state)
-        dec_out, attns = self.decoder(tgt, memory_bank,
+        dec_out, attns = self.decoder0(tgt, memory_bank,
                                       memory_lengths=lengths)
+        if self.decoder1 and dec_num:
+            dec_out, attns = self.decoder1(tgt, memory_bank,
+                    memory_lengths=lengths)
 
         return dec_out, attns
+
+

@@ -63,6 +63,9 @@ def model_opts(parser):
                        help="""Type of decoder layer to use. Non-RNN layers
                        are experimental. Options are
                        [rnn|transformer|cnn].""")
+    group.add_argument('-double_decoder', type=int, default=0, choices[0,1], 
+                        help"""Whether or not you want to train two separate
+                        decoders for separate training data.""")
 
     group.add_argument('-layers', type=int, default=-1,
                        help='Number of layers in enc/dec.')
@@ -160,6 +163,12 @@ def preprocess_opts(parser):
                        help="Path to the training source data")
     group.add_argument('-train_tgt', required=True,
                        help="Path to the training target data")
+    group.add_argument('-train_src2', required=False,
+                       help="Path to the source data for the second training 
+                       corpus")
+    group.add_argument('-train_tgt2', required=False,
+                       help="Path to the target data for the second training
+                       corpus")
     group.add_argument('-valid_src', required=True,
                        help="Path to the validation source data")
     group.add_argument('-valid_tgt', required=True,
