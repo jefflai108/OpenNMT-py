@@ -135,18 +135,19 @@ def main(opt, device_id):
     def train_iter_fct1(): return build_dataset_iter(
         lazily_load_dataset("train1", opt), fields, opt)
 
-    def valid_iter_fct(): return build_dataset_iter(
-        lazily_load_dataset("valid", opt), fields, opt, is_train=False)
-    def valid_iter_fct(): return build_dataset_iter(
-        lazily_load_dataset("valid", opt), fields, opt, is_train=False)
+    def valid_iter_fct0(): return build_dataset_iter(
+        lazily_load_dataset("valid0", opt), fields, opt, is_train=False)
+    def valid_iter_fct1(): return build_dataset_iter(
+        lazily_load_dataset("valid1", opt), fields, opt, is_train=False)
 
     # Do training.
     if len(opt.gpu_ranks):
         logger.info('Starting training on GPU: %s' % opt.gpu_ranks)
     else:
         logger.info('Starting training on CPU, could be very slow')
-    trainer.train(train_iter_fct, valid_iter_fct, opt.train_steps,
-                  opt.valid_steps)
+    trainer.train([train_iter_fct0, train_iter_fct1],
+            [valid_iter_fct0, valid_iter_fct1], opt.train_steps, 
+            opt.valid_steps)
 
     if opt.tensorboard:
         trainer.report_manager.tensorboard_writer.close()

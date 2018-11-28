@@ -112,7 +112,7 @@ class Trainer(object):
         # Set model in training mode.
         self.model.train()
 
-    def train(self, train_iter_fct_list, valid_iter_fct, train_steps, valid_steps):
+    def train(self, train_iter_fct_list, valid_iter_fct_list, train_steps, valid_steps):
         """
         The main training loops.
         by iterating over training data (i.e. `train_iter_fct`)
@@ -122,7 +122,7 @@ class Trainer(object):
             train_iter_fct_list(list): a list of functions that returns the train
                 iterators - one for each training set. e.g. something like
                 train_iter_fct = lambda: generator(*args, **kwargs)
-            valid_iter_fct(function): same as train_iter_fct, for valid data
+            valid_iter_fct_list(list): same as train_iter_fct_list, for valid data
             train_steps(int):
             valid_steps(int):
             save_checkpoint_steps(int):
@@ -147,8 +147,10 @@ class Trainer(object):
             reduce_counter = 0
             if len(train_iter_fct_list) > 1:
                 train_iter = zip(train_iter_fct_list[0](), train_iter_fct_list[1]())
+                valid_iter = zip(valid_iter_fct_list[0](), valid_iter_fct_list[1]())
             else:
-                train_iter = train_iter_fct_list_[0]()
+                train_iter = zip(train_iter_fct_list[0](), )
+                valid_iter = zip(valid_iter_fct_list[0](), )
             for i, batches in enumerate(train_iter):
                 for dec_num, batch in enumerate(batches):
                     if self.n_gpu == 0 or (i % self.n_gpu == self.gpu_rank):
@@ -193,7 +195,7 @@ class Trainer(object):
                                 if self.gpu_verbose_level > 0:
                                     logger.info('GpuRank %d: validate step %d'
                                                 % (self.gpu_rank, step))
-                                valid_iter = valid_iter_fct()
+                                #valid_iter = valid_iter_fct()
                                 valid_stats = self.validate(valid_iter)
                                 if self.gpu_verbose_level > 0:
                                     logger.info('GpuRank %d: gather valid stat \
@@ -213,11 +215,11 @@ class Trainer(object):
             if self.gpu_verbose_level > 0:
                 logger.info('GpuRank %d: we completed an epoch \
                             at step %d' % (self.gpu_rank, step))
-            train_iter = train_iter_fct()
+            #train_iter = train_iter_fct()
 
         return total_stats
 
-    def validate(self, valid_iter):
+    def validate(self, valid_iter, dec_num):
         """ Validate model.
             valid_iter: validate data iterator
         Returns:
@@ -240,7 +242,7 @@ class Trainer(object):
             tgt = inputters.make_features(batch, 'tgt')
 
             # F-prop through the model.
-            outputs, attns = self.model(src, tgt, src_lengths)
+            outputs, attns = self.model(src, tgt, src_lengths, dec_num)
 
             # Compute loss.
             batch_stats = self.valid_loss.monolithic_compute_loss(
