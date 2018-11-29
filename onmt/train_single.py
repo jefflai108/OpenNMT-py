@@ -30,13 +30,23 @@ def _check_save_model_path(opt):
 def _tally_parameters(model):
     n_params = sum([p.nelement() for p in model.parameters()])
     enc = 0
-    dec = 0
+    dec0 = 0
+    dec1 = 0
+    print('printing the named parameters')
     for name, param in model.named_parameters():
         if 'encoder' in name:
             enc += param.nelement()
-        elif 'decoder' or 'generator' in name:
-            dec += param.nelement()
-    return n_params, enc, dec
+        elif 'decoder0' in name or 'generator0' in name:
+            print('decoder0 in name')
+            print(name)
+            print(param.nelement())
+            dec0 += param.nelement()
+        elif 'decoder1' in name or 'generator1' in name:
+            print('decoder1 in name')
+            print(name)
+            print(param.nelement())
+            dec1 += param.nelement()
+    return n_params, enc, dec0, dec1
 
 
 def training_opt_postprocessing(opt, device_id):
@@ -97,7 +107,7 @@ def main(opt, device_id):
 
     # Peek the first dataset to determine the data_type.
     # (All datasets have the same data_type).
-    first_dataset = next(lazily_load_dataset("train", opt))
+    first_dataset = next(lazily_load_dataset("train0", opt))
     data_type = first_dataset.data_type
 
     # Load fields generated from preprocess phase.
@@ -115,9 +125,11 @@ def main(opt, device_id):
 
     # Build model.
     model = build_model(model_opt, opt, fields, checkpoint)
-    n_params, enc, dec = _tally_parameters(model)
+    n_params, enc, dec0, dec1 = _tally_parameters(model)
     logger.info('encoder: %d' % enc)
-    logger.info('decoder: %d' % dec)
+    logger.info('decoder0: %d' % dec0)
+    if dec1:
+        logger.info('decoder1: %d' % dec1)
     logger.info('* number of parameters: %d' % n_params)
     _check_save_model_path(opt)
 

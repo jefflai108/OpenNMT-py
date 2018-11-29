@@ -147,10 +147,10 @@ class Trainer(object):
             reduce_counter = 0
             if len(train_iter_fct_list) > 1:
                 train_iter = zip(train_iter_fct_list[0](), train_iter_fct_list[1]())
-                valid_iter = zip(valid_iter_fct_list[0](), valid_iter_fct_list[1]())
+                #valid_iter = zip(valid_iter_fct_list[0](), valid_iter_fct_list[1]())
             else:
                 train_iter = zip(train_iter_fct_list[0](), )
-                valid_iter = zip(valid_iter_fct_list[0](), )
+                #valid_iter = zip(valid_iter_fct_list[0](), )
             for i, batches in enumerate(train_iter):
                 for dec_num, batch in enumerate(batches):
                     if self.n_gpu == 0 or (i % self.n_gpu == self.gpu_rank):
@@ -196,16 +196,19 @@ class Trainer(object):
                                     logger.info('GpuRank %d: validate step %d'
                                                 % (self.gpu_rank, step))
                                 #valid_iter = valid_iter_fct()
-                                valid_stats = self.validate(valid_iter)
-                                if self.gpu_verbose_level > 0:
-                                    logger.info('GpuRank %d: gather valid stat \
-                                                step %d' % (self.gpu_rank, step))
-                                valid_stats = self._maybe_gather_stats(valid_stats)
-                                if self.gpu_verbose_level > 0:
-                                    logger.info('GpuRank %d: report stat step %d'
-                                                % (self.gpu_rank, step))
-                                self._report_step(self.optim.learning_rate,
-                                                  step, valid_stats=valid_stats)
+                                for dec_num, valid_iter in valid_iter_fct_list: 
+                                    valid_stats = self.validate(valid_iter, dec_num)
+                                    if self.gpu_verbose_level > 0:
+                                        logger.info('GpuRank %d: gather valid stat \
+                                                step %d, decoder %d' % (
+                                                    self.gpu_rank, step, dec_num))
+                                    valid_stats = self._maybe_gather_stats(valid_stats)
+                                    if self.gpu_verbose_level > 0:
+                                        logger.info('GpuRank %d: report stat \
+                                                step %d, decoder %d'
+                                                    % (self.gpu_rank, step, dec_num))
+                                    self._report_step(self.optim.learning_rate,
+                                                      step, valid_stats=valid_stats)
 
                             if self.gpu_rank == 0:
                                 self._maybe_save(step)
@@ -313,8 +316,12 @@ class Trainer(object):
                 # TO CHECK
                 # if dec_state is not None:
                 #    dec_state.detach()
-                if self.model.decoder.state is not None:
-                    self.model.decoder.detach_state()
+                if dec_num: 
+                    if self.model.decoder0.state is not None:
+                        self.model.decoder0.detach_state()
+                else:
+                    if self.model.decoder1.state is not None:
+                        self.model.decoder1.detach_state()
 
         # in case of multi step gradient accumulation,
         # update only after accum batches

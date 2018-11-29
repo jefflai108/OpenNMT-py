@@ -63,8 +63,8 @@ def model_opts(parser):
                        help="""Type of decoder layer to use. Non-RNN layers
                        are experimental. Options are
                        [rnn|transformer|cnn].""")
-    group.add_argument('-double_decoder', type=int, default=0, choices[0,1], 
-                        help"""Whether or not you want to train two separate
+    group.add_argument('-double_decoder', type=int, default=0, choices=[0,1],
+                        help="""Whether or not you want to train two separate
                         decoders for separate training data.""")
 
     group.add_argument('-layers', type=int, default=-1,
@@ -163,16 +163,22 @@ def preprocess_opts(parser):
                        help="Path to the training source data")
     group.add_argument('-train_tgt', required=True,
                        help="Path to the training target data")
-    group.add_argument('-train_src2', required=False,
-                       help="Path to the source data for the second training 
-                       corpus")
-    group.add_argument('-train_tgt2', required=False,
-                       help="Path to the target data for the second training
-                       corpus")
+    group.add_argument('-train_src1', required=False,
+                       help="""Path to the source data for the second training 
+                       corpus""")
+    group.add_argument('-train_tgt1', required=False,
+                       help="""Path to the target data for the second training
+                       corpus""")
     group.add_argument('-valid_src', required=True,
                        help="Path to the validation source data")
     group.add_argument('-valid_tgt', required=True,
                        help="Path to the validation target data")
+    group.add_argument('-valid_src1', required=False,
+                       help="""Path to the source data for the second
+                        validation corpus""")
+    group.add_argument('-valid_tgt1', required=False,
+                       help="""Path to the target data for the second 
+                       validation corpus""")
 
     group.add_argument('-src_dir', default="",
                        help="Source directory for image or audio files.")
@@ -323,6 +329,11 @@ def train_opts(parser):
                        help="""If a valid path is specified, then this will load
                        pretrained word embeddings on the decoder side.
                        See README for specific formatting instructions.""")
+    group.add_argument('-pre_word_vecs_dec1',
+                       help="""If a valid path is specified, then this will load
+                       pretrained word embeddings on the decoder side for the 
+                       second decoder. See README for specific formatting 
+                       instructions.""")
     # Fixed word vectors
     group.add_argument('-fix_word_vecs_enc',
                        action='store_true',
@@ -330,6 +341,10 @@ def train_opts(parser):
     group.add_argument('-fix_word_vecs_dec',
                        action='store_true',
                        help="Fix word embeddings on the decoder side.")
+    group.add_argument('-fix_word_vecs_dec1',
+                       action='store_true',
+                       help="""Fix word embeddings on the decoder side for the
+                       second decoder.""")
 
     # Optimization options
     group = parser.add_argument_group('Optimization- Type')

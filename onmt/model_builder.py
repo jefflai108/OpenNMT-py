@@ -213,12 +213,18 @@ def build_base_model(model_opt, fields, gpu, checkpoint=None):
         tgt_embeddings.word_lut.weight = src_embeddings.word_lut.weight
 
     decoder0 = build_decoder(model_opt, tgt_embeddings)
-    if model_opts.double_decoder:
-        decoder1 = build_decoder(model_opt, tgt_embeddings)
+    if model_opt.double_decoder:
+        print('this has a double decoder')
+        tgt_embeddings1 = build_embeddings(model_opt, tgt_dict,
+                                      feature_dicts, for_encoder=False)
+        decoder1 = build_decoder(model_opt, tgt_embeddings1)
 
     # Build NMTModel(= encoder + decoder).
     device = torch.device("cuda" if gpu else "cpu")
-    model = onmt.models.NMTModel(encoder, decoder0, decoder1=None)
+    if decoder1:
+        model = onmt.models.NMTModel(encoder, decoder0, decoder1)
+    else:
+        model = onmt.models.NMTModel(encoder, decoder0)
 
     # Build Generator.
     if not model_opt.copy_attn:
@@ -269,9 +275,12 @@ def build_base_model(model_opt, fields, gpu, checkpoint=None):
         if hasattr(model.encoder, 'embeddings'):
             model.encoder.embeddings.load_pretrained_vectors(
                 model_opt.pre_word_vecs_enc, model_opt.fix_word_vecs_enc)
-        if hasattr(model.decoder, 'embeddings'):
-            model.decoder.embeddings.load_pretrained_vectors(
+        if hasattr(model.decoder0, 'embeddings'):
+            model.decoder0.embeddings.load_pretrained_vectors(
                 model_opt.pre_word_vecs_dec, model_opt.fix_word_vecs_dec)
+        if hasattr(model.decoder1, 'embeddings'):
+            model.decoder1.embeddings.load_pretrained_vectors(
+                model_opt.pre_word_vecs_dec1, model_opt.fix_word_vecs_dec1)
 
     # Add generator to model (this registers it as parameter of model).
     model.generator = generator
