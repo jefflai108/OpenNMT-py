@@ -75,14 +75,7 @@ TRG=en
 ## Double Decoder Preprocessing
 ##
 
-# Test
-##python preprocess.py \
-##	-train_src $datadir/europarl-v7.es-en.bpe.30.$SRC \
-##	-train_tgt $datadir/europarl-v7.es-en.bpe.30.$TRG \
-##	-valid_src $datadir/dev/newstest2012.bpe.30.$SRC \
-##	-valid_tgt $datadir/dev/newstest2012.bpe.30.$TRG \
-##	-save_data $datadir/europarl-testing.30
-
+### Separate Europarl & OpenSubtitles Decoders
 python preprocess_dd.py \
 	-train_src $datadir/europarl-v7.es-en.bpe.100.$SRC \
         -train_tgt $datadir/europarl-v7.es-en.bpe.100.$TRG \

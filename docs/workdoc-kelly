@@ -26,3 +26,12 @@ installed (outside VM? it seems to work OK) textstat with:
 	pip install textstat
 finished writing get_readability.py
 wrote finished writing translate.sh and ran scoring tests 0-8
+
+28 Nov
+began editing code to handle 2 decoders
+wrote preprocess_dd.py to preprocess data that will be handed to double decoders.
+ran preprocessing of Euro+OS data for separate decoders using
+	scripts/preprocess_data.sh
+edited onmt/ for double decoder
+edited train.sh to pass a var for double decoder
+ran train.sh experiments 3-4

@@ -32,7 +32,6 @@ def _tally_parameters(model):
     enc = 0
     dec0 = 0
     dec1 = 0
-    print('printing the named parameters')
     for name, param in model.named_parameters():
         if 'encoder' in name:
             enc += param.nelement()

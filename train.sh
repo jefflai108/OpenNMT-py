@@ -36,8 +36,9 @@ if [ $stage -eq 3 ]; then
 fi
 
 if [ $stage -eq 4 ]; then
-	# Testing - OpenSubtitles2018
-	DATA=OpenSubtitles2018.30
+	# Testing - Redoing OpenSubtitles to verify that original implmentation
+        # still works after editing the code for double decoder.
+	DATA=OpenSubtitles2018.100
 fi
 
 ###############################################################################
