@@ -316,7 +316,7 @@ class Trainer(object):
                 # TO CHECK
                 # if dec_state is not None:
                 #    dec_state.detach()
-                if dec_num: 
+                if dec_num == 0:
                     if self.model.decoder0.state is not None:
                         self.model.decoder0.detach_state()
                 else:

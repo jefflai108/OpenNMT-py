@@ -213,6 +213,7 @@ def build_base_model(model_opt, fields, gpu, checkpoint=None):
         tgt_embeddings.word_lut.weight = src_embeddings.word_lut.weight
 
     decoder0 = build_decoder(model_opt, tgt_embeddings)
+    decoder1 = None
     if model_opt.double_decoder:
         print('this has a double decoder')
         tgt_embeddings1 = build_embeddings(model_opt, tgt_dict,

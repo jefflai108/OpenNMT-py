@@ -37,14 +37,8 @@ def _tally_parameters(model):
         if 'encoder' in name:
             enc += param.nelement()
         elif 'decoder0' in name or 'generator0' in name:
-            print('decoder0 in name')
-            print(name)
-            print(param.nelement())
             dec0 += param.nelement()
         elif 'decoder1' in name or 'generator1' in name:
-            print('decoder1 in name')
-            print(name)
-            print(param.nelement())
             dec1 += param.nelement()
     return n_params, enc, dec0, dec1
 
@@ -144,22 +138,28 @@ def main(opt, device_id):
 
     def train_iter_fct0(): return build_dataset_iter(
         lazily_load_dataset("train0", opt), fields, opt)
-    def train_iter_fct1(): return build_dataset_iter(
-        lazily_load_dataset("train1", opt), fields, opt)
-
     def valid_iter_fct0(): return build_dataset_iter(
         lazily_load_dataset("valid0", opt), fields, opt, is_train=False)
-    def valid_iter_fct1(): return build_dataset_iter(
-        lazily_load_dataset("valid1", opt), fields, opt, is_train=False)
+    
+    train_iter = [train_iter_fct0]
+    valid_iter = [valid_iter_fct0]
+
+    # Load extra datasets for double decoder, if applicable.
+    if opt.double_decoder:
+        def train_iter_fct1(): return build_dataset_iter(
+            lazily_load_dataset("train1", opt), fields, opt)
+        def valid_iter_fct1(): return build_dataset_iter(
+            lazily_load_dataset("valid1", opt), fields, opt, is_train=False)
+        
+        train_iter.append(train_iter_fct1)
+        valid_iter.append(valid_iter_fct1)
 
     # Do training.
     if len(opt.gpu_ranks):
         logger.info('Starting training on GPU: %s' % opt.gpu_ranks)
     else:
         logger.info('Starting training on CPU, could be very slow')
-    trainer.train([train_iter_fct0, train_iter_fct1],
-            [valid_iter_fct0, valid_iter_fct1], opt.train_steps, 
-            opt.valid_steps)
+    trainer.train(train_iter, valid_iter, opt.train_steps, opt.valid_steps)
 
     if opt.tensorboard:
         trainer.report_manager.tensorboard_writer.close()

@@ -35,6 +35,10 @@ if [ $stage -eq 3 ]; then
 	DOUBLE_DECODER=1
 fi
 
+if [ $stage -eq 4 ]; then
+	# Testing - OpenSubtitles2018
+	DATA=OpenSubtitles2018.30
+fi
 
 ###############################################################################
 
