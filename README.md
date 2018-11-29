@@ -1,5 +1,3 @@
-Translating into Simple/Complex Reading Level
-
 This is Kelly, Jeff, and Craig's second attempt at our Machine Translation 
 Final Project (Fall 2018) based off a fork of OpenNMT.
 
@@ -14,7 +12,7 @@ Workflow
 * Train: sh qsub-train.sh {exp#}
 * Translate test set: sh qsub-translate.sh
 ** sh qsub-trans.sh model testset\_opt output\_file
-* Score Readability:
+* Score
 
 
 Jeff's Grid path: /export/b14/jlai/mt
