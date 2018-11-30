@@ -12,3 +12,15 @@ Citation for OpenSubtitles2018:
 
 I did the data processing in ~/complexity-transl
 	- look at docs/workdoc-kelly, scripts/preprocess-data.sh, etc.
+
+Philipp says our paper would be stronger if we:
+	(1) Use paracrawl and split according to readability level, since using
+	    different data could just be a domain effect.
+	(2) Use other available scorers in addition to our two.
+
+The learning rate hits 0.00 during training - does it do that too early, 
+	preventing more gains?
+
+If double decoder doesn't work, could be that it just needed to be optimised
+	for the task (aka, maybe decoders need smaller params b/c they get 
+	less data). Mention in MT write-up.

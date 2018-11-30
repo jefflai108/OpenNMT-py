@@ -103,6 +103,12 @@ class Translator(object):
 
         self.use_filter_pred = False
 
+        # set decoder
+        if opt.dec_num:
+            self.decoder = self.model.decoder0
+        else:
+            self.decoder = self.model.decoder1
+
         # for debugging
         self.beam_trace = self.dump_beam != ""
         self.beam_accum = None
@@ -325,7 +331,7 @@ class Translator(object):
         # and [src_len, batch, hidden] as memory_bank
         # in case of inference tgt_len = 1, batch = beam times batch_size
         # in case of Gold Scoring tgt_len = actual length, batch = 1 batch
-        dec_out, dec_attn = self.model.decoder(
+        dec_out, dec_attn = self.decoder(
             decoder_input,
             memory_bank,
             memory_lengths=memory_lengths,
@@ -385,7 +391,7 @@ class Translator(object):
         # Encoder forward.
         src, enc_states, memory_bank, src_lengths = self._run_encoder(
             batch, data.data_type)
-        self.model.decoder.init_state(
+        self.decoder.init_state(
             src, memory_bank, enc_states, with_cache=True)
 
         results = {}
@@ -397,13 +403,13 @@ class Translator(object):
             results["gold_score"] = self._score_target(
                 batch, memory_bank, src_lengths, data, batch.src_map
                 if data.data_type == 'text' and self.copy_attn else None)
-            self.model.decoder.init_state(
+            self.decoder.init_state(
                 src, memory_bank, enc_states, with_cache=True)
         else:
             results["gold_score"] = [0] * batch_size
 
         # Tile states and memory beam_size times.
-        self.model.decoder.map_state(
+        self.decoder.map_state(
             lambda state, dim: tile(state, beam_size, dim=dim))
         if isinstance(memory_bank, tuple):
             memory_bank = tuple(tile(x, beam_size, dim=1) for x in memory_bank)
@@ -558,7 +564,7 @@ class Translator(object):
                 memory_bank = memory_bank.index_select(1, select_indices)
 
             memory_lengths = memory_lengths.index_select(0, select_indices)
-            self.model.decoder.map_state(
+            self.decoder.map_state(
                 lambda state, dim: state.index_select(dim, select_indices))
             if src_map is not None:
                 src_map = src_map.index_select(1, select_indices)
@@ -593,7 +599,7 @@ class Translator(object):
         # (1) Run the encoder on the src.
         src, enc_states, memory_bank, src_lengths = self._run_encoder(
             batch, data_type)
-        self.model.decoder.init_state(src, memory_bank, enc_states)
+        self.decoder.init_state(src, memory_bank, enc_states)
 
         results = {}
         results["predictions"] = []
@@ -604,7 +610,7 @@ class Translator(object):
             results["gold_score"] = self._score_target(
                 batch, memory_bank, src_lengths, data, batch.src_map
                 if data_type == 'text' and self.copy_attn else None)
-            self.model.decoder.init_state(
+            self.decoder.init_state(
                 src, memory_bank, enc_states, with_cache=True)
         else:
             results["gold_score"] = [0] * batch_size
@@ -613,7 +619,7 @@ class Translator(object):
         # We use now  batch_size x beam_size (same as fast mode)
         src_map = (tile(batch.src_map, beam_size, dim=1)
                    if data.data_type == 'text' and self.copy_attn else None)
-        self.model.decoder.map_state(
+        self.decoder.map_state(
             lambda state, dim: tile(state, beam_size, dim=dim))
 
         if isinstance(memory_bank, tuple):
@@ -652,7 +658,7 @@ class Translator(object):
                     b.get_current_origin() + j * beam_size)
             select_indices = torch.cat(select_indices_array)
 
-            self.model.decoder.map_state(
+            self.decoder.map_state(
                 lambda state, dim: state.index_select(dim, select_indices))
 
         # (4) Extract sentences from beam.

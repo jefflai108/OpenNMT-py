@@ -479,6 +479,8 @@ def translate_opts(parser):
                        help='Path to model .pt file(s). '
                             'Multiple models can be specified, '
                             'for ensemble decoding.')
+    group.add_argument('-dec_num', type=int, default=0, 
+                       help="Which decoder to use during translation.")
     group.add_argument('-avg_raw_probs', action='store_true',
                        help="""If this is set, during ensembling scores from
                        different models will be combined by averaging their

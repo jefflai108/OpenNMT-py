@@ -35,3 +35,25 @@ ran preprocessing of Euro+OS data for separate decoders using
 edited onmt/ for double decoder
 edited train.sh to pass a var for double decoder
 ran train.sh experiments 3-4
+
+29 Nov
+ran translate.sh experiments 9-14
+copied corpus.bpe.100.shuf.{en/es} and europarl-v7.es-en.bpe.100.shuf.{en/es} 
+	from Craig's /export/c06/cguo/data2 to data
+copied paracrawl data to data/ with:
+	wget https://s3.amazonaws.com/web-language-models/paracrawl/release1/paracrawl-release1.en-es.zipporah0-dedup-clean.tgz
+copied preprocessing scripts from ~/complexity-transl/scripts to scripts/
+renamed scripts/preprocess_data.sh to scripts/preprocess-data-onmt.sh 
+renamed scripts/preprocess-data2.sh to scripts/preprocess-data-cleanjoin.sh 
+copied ~/complexity_transl/model to this repository (contains 
+	previously-trained BPE model and truecaser model.)
+wrote and ran scripts/preprocess-paracrawl.sh
+ran updated scripts/preprocess-data-onmt.sh for shuffled corpus & europarl data
+
+30 Nov
+renamed all shuf & paracrawl files in data/ that had .train. to .train0. 
+	because that's what the training script expects now (after adding
+	double decoder code)
+added preprocessing for regular paracrawl data to scripts/preprocess-data-onmt.sh
+	and ran it.
+ran train.sh for trials 5-8  
