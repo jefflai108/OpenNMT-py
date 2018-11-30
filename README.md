@@ -1,4 +1,3 @@
-
 This is Kelly, Jeff, and Craig's second attempt at our Machine Translation 
 Final Project (Fall 2018) based off a fork of OpenNMT.
 
