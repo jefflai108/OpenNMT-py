@@ -66,23 +66,42 @@ fi
 # Paracrawl Double-Decoders
 if [ $stage -eq 9 ]; then
 	# Double Decoder - Paracrawl - 50/50 simple/complex split.
-	DATA=paracrawl.100.50-50
+	DATA=paracrawl_dd_50.100
 	DOUBLE_DECODER=1
 fi
 
 if [ $stage -eq 10 ]; then
 	# Double Decoder - Paracrawl - bottom 40 / top 40 simple/complex split.
-	DATA=paracrawl.100.40-40
+	DATA=paracrawl_dd_40.100
 	DOUBLE_DECODER=1
 fi
 
 if [ $stage -eq 11 ]; then
-	# Double Decoder - Paracrawl - bottom 25 / top 25 simple/complex split.
-	DATA=paracrawl.100.25-25
+	# Double Decoder - Paracrawl - bottom 30 / top 30 simple/complex split.
+	DATA=paracrawl_dd_30.100
 	DOUBLE_DECODER=1
 fi
 
 ###############################################################################
+# Corpus Double-Decoders
+if [ $stage -eq 12 ]; then
+	# Double Decoder - Corpus - 50/50 simple/complex split.
+	DATA=corpus_shuf_dd_50.100
+	DOUBLE_DECODER=1
+fi
+
+if [ $stage -eq 13 ]; then
+	# Double Decoder - Corpus - bottom 40 / top 40 simple/complex split.
+	DATA=corpus_shuf_dd_40.100
+	DOUBLE_DECODER=1
+fi
+
+if [ $stage -eq 14 ]; then
+	# Double Decoder - Corpus - bottom 30 / top 30 simple/complex split.
+	DATA=corpus_shuf_dd_30.100
+	DOUBLE_DECODER=1
+fi
+
 
 # Make Train Directory
 mkdir -p checkpoint/$stage

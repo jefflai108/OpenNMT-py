@@ -24,3 +24,18 @@ The learning rate hits 0.00 during training - does it do that too early,
 If double decoder doesn't work, could be that it just needed to be optimised
 	for the task (aka, maybe decoders need smaller params b/c they get 
 	less data). Mention in MT write-up.
+
+Our paper is both about readability *and* formality. Maybe make a second paper 
+about formality?
+	Maybe Paracrawl part could be more about readability, and Euro vs. OS
+	about formality?
+
+Maybe craig's is better at maintaining high bleu score whereas mine is better 
+	at widening the gap.  I think craig's is better in lower resource envs
+	b/c the decoder learns from all sentences (like corpus) -- mine may 
+	suffers on corpus b/c each decoder gets limited examples (half of craig's)
+Future work - craig used all examples - tagged middle ones neutrally so could 
+	learn from them anyway. I eliminated those. I could try adding them and 
+	alternating between decoders so I can take advantage of the extra data. 
+	Maybe that will help me recover BLEU score since my BLEUs were lower 
+	than his. 

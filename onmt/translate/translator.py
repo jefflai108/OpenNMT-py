@@ -104,10 +104,10 @@ class Translator(object):
         self.use_filter_pred = False
 
         # set decoder
-        if opt.dec_num:
-            self.decoder = self.model.decoder0
-        else:
+        if opt.dec_num == 1:
             self.decoder = self.model.decoder1
+        else:
+            self.decoder = self.model.decoder0 or self.model.decoder
 
         # for debugging
         self.beam_trace = self.dump_beam != ""
