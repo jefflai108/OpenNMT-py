@@ -537,6 +537,17 @@ if [ $stage -eq 65 ]; then
 	outfile=checkpoint/14/$PARA.complex
 fi
 
+####
+# Shuffled Corpus Baseline - Paracrawl
+#
+
+if [ $stage -eq 66 ]; then
+	# Model: Full Corpus - Shuffled. Test Set: Paracrawl.
+	model=checkpoint/5/5_step_150000.pt
+	testset_abbr='para'
+	outfile=checkpoint/5/$PARA
+fi
+
 case "$testset_abbr" in
    "both") 
 	   testset=data/test/newstest2013_OS2018.test.bpe.es
